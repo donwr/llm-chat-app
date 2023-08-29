@@ -3,6 +3,20 @@ import streamlit as st
 from typing import Set
 from streamlit_chat import message
 
+# CSS Styles
+st.markdown(
+    """
+    <style>
+    .chat-container {
+        overflow-wrap: break-word;
+        word-wrap: break-word;
+        hyphens: auto;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True,
+)
+
 st.header("Langchain Course - Documentation Helper Bot")
 
 prompt = st.text_input("Prompt", placeholder="Enter your prompt here..")

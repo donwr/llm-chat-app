@@ -1,9 +1,11 @@
 from dotenv import load_dotenv
+
 load_dotenv()
 import os
 
 # Import the ReadTheDocsLoader for loading the documents
 from langchain.document_loaders import ReadTheDocsLoader
+
 # Import the RecursiveCharacterTextSplitter for splitting the documents
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 
@@ -16,18 +18,26 @@ from langchain.vectorstores import Pinecone
 # Import the Pinecone SDK
 import pinecone
 
-pinecone.init(api_key=os.environ["PINECONE_API_KEY"], environment=os.environ["PINECONE_ENVIRONMENT_REGION"])
+pinecone.init(
+    api_key=os.environ["PINECONE_API_KEY"],
+    environment=os.environ["PINECONE_ENVIRONMENT_REGION"],
+)
+
 
 def ingest_docs() -> None:
     # Create a loader
-    loader = ReadTheDocsLoader(path="langchain-docs/langchain-docs/langchain.readthedocs.io/en/latest")
-    
+    loader = ReadTheDocsLoader(
+        path="langchain-docs/langchain-docs/langchain.readthedocs.io/en/latest"
+    )
+
     # Create a list of raw documents
     raw_documents = loader.load()
 
     # Print the number of documents
     print(f"loaded {len(raw_documents) } documents")
-    text_splitter = RecursiveCharacterTextSplitter(chunk_size=800, chunk_overlap=50, separators=["\n\n", "\n", " ", ""])
+    text_splitter = RecursiveCharacterTextSplitter(
+        chunk_size=800, chunk_overlap=50, separators=["\n\n", "\n", " ", ""]
+    )
 
     # Split the documents
     documents = text_splitter.split_documents(documents=raw_documents)
@@ -48,5 +58,6 @@ def ingest_docs() -> None:
 
     print("****** Added to Pinecone vectorstore vectors")
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     ingest_docs()

@@ -1,4 +1,5 @@
 from dotenv import load_dotenv
+
 load_dotenv()
 import os
 from langchain.document_loaders import ReadTheDocsLoader
@@ -32,9 +33,7 @@ def ingest_docs() -> None:
 
     print(f"Going to insert {len(documents)} to Pinecone")
     embeddings = OpenAIEmbeddings()
-    Pinecone.from_documents(
-        documents, embeddings, index_name="langchain-doc-index"
-    )
+    Pinecone.from_documents(documents, embeddings, index_name="langchain-doc-index")
     print("****** Added to Pinecone vectorstore vectors")
 
 
